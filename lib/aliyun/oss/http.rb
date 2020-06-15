@@ -94,7 +94,11 @@ module Aliyun
         end
 
         def write(chunk)
-          @buffer << chunk.to_s.force_encoding(Encoding::ASCII_8BIT)
+          if chunk.is_a?(String)
+            @buffer << chunk
+          else
+            @buffer << chunk.to_s.force_encoding(Encoding::ASCII_8BIT)
+          end
           Fiber.yield
           self
         end
